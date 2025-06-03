@@ -33,7 +33,7 @@ export default function Navbar() {
         ></div>
       )}
 
-      <nav className="bg-orange-600 text-white shadow-md sticky top-0 z-50">
+      <nav className="bg-orange-600 text-white  sticky top-0 z-50">
         <div className="max mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             {/* Logo */}

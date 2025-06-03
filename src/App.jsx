@@ -7,6 +7,7 @@ import { Outdent } from "lucide-react";
 import PrivacyPolicy from "./pages/legal/PrivacyPolicy";
 import Disclaimer from "./pages/legal/Disclaimer";
 import TermsOfService from "./pages/legal/TermsOfService";
+import ContactUs from "./pages/contact/Contact";
 
 function App() {
   return (
@@ -18,6 +19,8 @@ function App() {
             <Route path="privacy-policy" element={<PrivacyPolicy />} />
             <Route path="terms-of-service" element={<TermsOfService />} />
             <Route path="disclaimer" element={<Disclaimer />} />
+          </Route>
+          <Route path="contact-us" element={<ContactUs/>}>
           </Route>
         </Route>
       </Route>
