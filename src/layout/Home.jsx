@@ -1,5 +1,6 @@
 import React from "react";
 import MithilaXLogo from "../components/logo/Logo";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -107,15 +108,15 @@ const Home = () => {
       </section>
 
       {/* Call to Action */}
-      <section className="bg-blue-950 text-white py-20 px-6 text-center">
+      <section className="bg-blue-950 text-white py-28 px-6 text-center">
         <h2 className="text-3xl font-bold mb-4">
           Ready to build the future with MithilaX?
         </h2>
         <p className="text-lg mb-6">
           Let’s create something powerful – together.
         </p>
-        <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-xl transition">
-          Contact Us
+        <button  className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-xl transition">
+          <Link to={'/pages/contact-us'}>Contact Us</Link>
         </button>
       </section>
     </div>
