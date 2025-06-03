@@ -91,7 +91,7 @@ export default function Navbar() {
 
           
           <NavLink
-            to="/pages/about/website"
+            to="/"
             label={"Home"}
             onClick={() => setMenuOpen(false)}
           />
