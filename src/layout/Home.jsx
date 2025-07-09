@@ -1,22 +1,25 @@
-import React from "react";
-import MithilaXLogo from "../components/logo/Logo";
 import { Link } from "react-router-dom";
+import ImageSlider from "../components/slider/ImageSlider";
+import BlockchainDesc from "../pages/home/BlockchainDesc";
+import WebDevDesc from "../pages/home/WebDevDesc";
+import BlockchainWhatWeBuild from "../pages/home/BlockchainWhatWeBuild";
 
 const Home = () => {
+  const imgArray = [
+    "/assets/bg/home/blockchain_technology.png",
+    "/assets/bg/home/GIS_dashboard_interface_displaying_layered_map.png",
+    "/assets/bg/home/web_and_Android_app.png",
+  ];
+
   return (
     <div className="bg-white text-gray-900">
+      <div className="w-full h-full">
+        <ImageSlider images={imgArray} />
+      </div>
       {/* Hero Section */}
-      <section className="bg-orange-600 text-white h-screen py-60 px-6 text-center">
-        <h1 className="text-5xl font-bold mb-4">Welcome to MithilaX</h1>
-        <p className="text-xl mb-6 max-w-3xl mx-auto">
-          Powering innovation through Blockchain, AI, and Next-Gen Application
-          Development.
-        </p>
-        <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-xl transition">
-          Get Started
-        </button>
-      </section>
-
+      <BlockchainDesc />
+      <BlockchainWhatWeBuild/>
+      <WebDevDesc />
 
       {/* About Section */}
       <section className="py-20 px-6 max-w-6xl mx-auto">
@@ -35,7 +38,7 @@ const Home = () => {
 
       {/* Services Section */}
       <section className="bg-gray-100 py-20 px-6">
-        <div className="max-w-6xl mx-auto text-center">
+        <div className="max-w-full mx-auto text-center">
           <h2 className="text-3xl font-bold text-blue-900 mb-12">
             Our Services
           </h2>
@@ -115,8 +118,8 @@ const Home = () => {
         <p className="text-lg mb-6">
           Let’s create something powerful – together.
         </p>
-        <button  className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-xl transition">
-          <Link to={'/pages/contact-us'}>Contact Us</Link>
+        <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-xl transition">
+          <Link to={"/pages/contact-us"}>Contact Us</Link>
         </button>
       </section>
     </div>

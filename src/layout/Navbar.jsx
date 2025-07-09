@@ -1,31 +1,61 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-import {
-  Handshake,
-  MenuIcon,
-  X,
-} from "lucide-react"; // Lucide globe icon
+import { Link, useLocation } from "react-router-dom";
+import { MenuIcon, X, Home, Briefcase, Phone, Info } from "lucide-react";
+
+const NAV_LINKS = [
+  { to: "/", label: "Home", icon: <Home /> },
+  { to: "/pages/legal/about-us", label: "About", icon: <Info /> },
+  { to: "/services", label: "Services", icon: <Briefcase /> },
+  { to: "/pages/contact-us", label: "Contact", icon: <Phone /> },
+];
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const location = useLocation();
+  const sidebarRef = useRef(null);
+  const [scrolled, setScrolled] = useState(false);
+
+  // console.log(location.pathname)
 
 
-  // Close dropdown when clicking outside
+
+
+  useEffect(()=>{
+    if(location.pathname!=='/'){
+      setScrolled(true);
+    }
+
+  },[location.pathname])
+
+
+  // Close sidebar when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setDropdownOpen(false);
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setMenuOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  useEffect(() => {
+  const handleScroll = () => {
+    if (window.scrollY > 620 || location.pathname!=='/') {
+      setScrolled(true);
+    } else {
+      setScrolled(false);
+    }
+  };
+
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, [location.pathname]);
+
+
   return (
     <>
-      {/* Overlay for mobile menu */}
+      {/* Overlay */}
       {menuOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40"
@@ -33,85 +63,76 @@ export default function Navbar() {
         ></div>
       )}
 
-      <nav className="bg-orange-600 text-white  sticky top-0 z-50">
-        <div className="max mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
+      <nav className={`fixed w-full top-0 z-50 transition-all duration-300 ${
+    scrolled ? "bg-blue-900 shadow-md text-white" : "bg-transparent text-white"
+  }`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
             {/* Logo */}
+            <Link to="/" className="flex items-center gap-2 font-bold text-xl text-orange-600">
+              <img src="/assets/logo/logo_round.png" alt="logo" className="w-10 h-10" />
+              MithilaX
+            </Link>
 
-            <div className="flex justify-items-center items-center">
-              <Link to="/" className="text-accent font-bold text-2xl">
-                <div className="flex justify-center items-center">
-                  <img
-                    className="w-16 h-16 m-4"
-                    src="/assets/logo/logo_round.png"
-                    alt="logo"
-                  />
-                  <p className="mr-8">Mithila<span className="">X</span></p>
-                </div>
-              </Link>
-
-              {!menuOpen && (
-                <div>
-                  <MenuIcon
-                    onClick={() => {
-                      setMenuOpen(!menuOpen);
-                    }}
-                    className="cursor-pointer"
-                    size={36}
-                  />
-                </div>
-              )}
+            {/* Desktop links */}
+            <div className="hidden md:flex gap-6 items-center text-white">
+              {NAV_LINKS.map((link) => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  className={`hover:text-orange-600 font-medium transition ${
+                    location.pathname === link.to ? "text-orange-600" : ""
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              ))}
             </div>
 
-           
-
-           
+            {/* Mobile Menu Icon */}
+            <div className="md:hidden">
+              <MenuIcon
+                size={28}
+                className="cursor-pointer"
+                onClick={() => setMenuOpen(true)}
+              />
+            </div>
           </div>
         </div>
       </nav>
 
-      {/* Sidebar (Mobile) */}
+      {/* Mobile Sidebar */}
       <div
+        ref={sidebarRef}
         className={`fixed top-0 left-0 h-screen w-64 bg-orange-600 text-white z-50 transform ${
           menuOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform duration-300 ease-in-out overflow-y-auto shadow-xl`}
+        } transition-transform duration-300 ease-in-out`}
       >
-        <div className="p-6 space-y-4 overflow-y-auto">
-          <div className="absolute right-0 top-2">
+        <div className="p-5 space-y-6">
+          {/* Close button */}
+          <div className="flex justify-end">
             <X
-              onClick={() => {
-                setMenuOpen(!menuOpen);
-              }}
-              size={36}
-              className="text-white cursor-pointer"
+              size={28}
+              className="cursor-pointer text-white"
+              onClick={() => setMenuOpen(false)}
             />
           </div>
 
-         
-
-          
-          <NavLink
-            to="/"
-            label={"Home"}
-            onClick={() => setMenuOpen(false)}
-          />
-          
+          {/* Links */}
+          {NAV_LINKS.map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              onClick={() => setMenuOpen(false)}
+              className={`flex items-center gap-3 text-lg font-semibold hover:text-yellow-200 transition ${
+                location.pathname === link.to ? "text-yellow-200" : ""
+              }`}
+            >
+              {link.icon} {link.label}
+            </Link>
+          ))}
         </div>
       </div>
     </>
-  );
-}
-
-function NavLink({ to, label, onClick }) {
-  return (
-    <Link
-      to={to}
-      onClick={onClick}
-      className="block text-lg font-semibold hover:text-accent transition-colors my-0"
-    >
-      <span className="flex">
-        {<Handshake className="mr-2" />} {label}
-      </span>
-    </Link>
   );
 }

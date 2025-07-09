@@ -1,5 +1,6 @@
 import { FaLinkedin, FaTwitter, FaFacebook, FaInstagram } from "react-icons/fa";
 import React from "react";
+import { contactMob1, supportEmail } from "../../utility/NameSpace";
 
 const ContactUs = () => {
   return (
@@ -74,13 +75,13 @@ const ContactUs = () => {
               <p>
                 Email:{" "}
                 <a href="mailto:support@mithilax.com" className="text-blue-700">
-                  support@mithilax.com
+                 {supportEmail}
                 </a>
               </p>
               <p>
                 Phone:{" "}
                 <a href="tel:+917080206885" className="text-blue-700">
-                  +91 7080206885
+                  {contactMob1}
                 </a>
               </p>
             </div>
